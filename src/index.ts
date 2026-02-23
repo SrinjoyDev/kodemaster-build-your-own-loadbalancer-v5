@@ -1,8 +1,13 @@
 import express from 'express';
 import { Config } from './utils/config';
+import { BackendServerDetails } from './backend-server-details';
 
 Config.load();
 const config = Config.getConfig();
+
+const backendServers = config.be_servers.map(
+    (s) => new BackendServerDetails(s.domain, s.weight)
+);
 
 const app = express();
 const PORT = config.lbPORT;
