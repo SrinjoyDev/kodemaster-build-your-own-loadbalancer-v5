@@ -5,7 +5,7 @@ Config.load();
 const config = Config.getConfig();
 
 const app = express();
-const PORT = config.lbPort;
+const PORT = config.lbPORT;
 
 app.get('/', (_req, res) => {
   res.send('Load Balancer v1.0');

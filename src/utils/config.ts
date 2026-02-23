@@ -10,7 +10,7 @@ export interface IBackendServerConfig {
 
 //type for full applicaiton config
 export interface IConfig {
-    lbPort : number;
+    lbPORT : number;
     lbAlgo : "rand" | "rr" | "wrr";
     be_servers : IBackendServerConfig[];
 }
@@ -19,7 +19,7 @@ export class Config {
     private static config : IConfig | undefined;
 
     private static schema = Joi.object<IConfig>({
-        lbPort : Joi.number().port().required(),
+        lbPORT : Joi.number().port().required(),
         lbAlgo : Joi.string().valid("rand", "rr", "wrr").required(),
         be_servers : Joi.array().items(
             Joi.object({
