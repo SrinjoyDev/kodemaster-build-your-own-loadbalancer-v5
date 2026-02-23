@@ -7,7 +7,7 @@ export interface IBackendServerDetails {
     getStatus() : BEServerHealth;
     setStatus(status : BEServerHealth) : void;
     incrementRequestsServed() : void;
-    readMetrics() : void;
+    resetMetrics() : void;
 }
 
 export class BackendServerDetails implements IBackendServerDetails {
@@ -33,7 +33,7 @@ export class BackendServerDetails implements IBackendServerDetails {
         this.requestsServedCount++;
     }
 
-    readMetrics(): void {
+    resetMetrics(): void {
         this.requestsServedCount = 0;
     }
 } 
