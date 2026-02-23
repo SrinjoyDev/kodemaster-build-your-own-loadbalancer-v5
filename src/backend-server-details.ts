@@ -6,14 +6,14 @@ export interface IBackendServerDetails {
     serverWeight : number;
     getStatus() : BEServerHealth;
     setStatus(status : BEServerHealth) : void;
-    incrementRequestsServerd() : void;
+    incrementRequestsServed() : void;
     readMetrics() : void;
 }
 
 export class BackendServerDetails implements IBackendServerDetails {
     public url : string;
     public serverWeight: number;
-    public requestsServerdCount = 0;
+    public requestsServedCount = 0;
     private status : BEServerHealth = BEServerHealth.UNHEALTHY;
 
     constructor(url : string, weight : number) {
@@ -29,11 +29,11 @@ export class BackendServerDetails implements IBackendServerDetails {
         this.status = status;
     }
 
-    incrementRequestsServerd() : void {
-        this.requestsServerdCount++;
+    incrementRequestsServed() : void {
+        this.requestsServedCount++;
     }
 
     readMetrics(): void {
-        this.requestsServerdCount = 0;
+        this.requestsServedCount = 0;
     }
 } 
