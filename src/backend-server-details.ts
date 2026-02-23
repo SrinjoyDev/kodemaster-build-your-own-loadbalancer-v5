@@ -1,4 +1,5 @@
 import { BEServerHealth } from "./utils/enums";
+import { HttpClient } from "./utils/http-client";
 
 
 export interface IBackendServerDetails {
@@ -8,6 +9,7 @@ export interface IBackendServerDetails {
     setStatus(status : BEServerHealth) : void;
     incrementRequestsServed() : void;
     resetMetrics() : void;
+    ping() : Promise<boolean>;
 }
 
 export class BackendServerDetails implements IBackendServerDetails {
@@ -35,5 +37,23 @@ export class BackendServerDetails implements IBackendServerDetails {
 
     resetMetrics(): void {
         this.requestsServedCount = 0;
+    }
+
+    async ping() : Promise<boolean> {
+        try{
+            const response = await HttpClient.get(`${this.url}/ping`);
+            //treat only 200 as helath
+            if(response.status >= 200 && response.status) {
+                this.setStatus(BEServerHealth.HEALTHY);
+                return true;
+            }
+
+            //non 2xx means unhalrehyy>
+            this.setStatus(BEServerHealth.UNHEALTHY);
+            return false;
+        } catch{
+            this.setStatus(BEServerHealth.UNHEALTHY);
+            return false;
+        }
     }
 } 
